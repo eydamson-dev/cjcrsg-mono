@@ -1,0 +1,23 @@
+# Using Node.js 20.9.0 LTS
+FROM node:20.9.0-slim
+
+# Install pnpm globally
+RUN npm install -g pnpm
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy package.json and pnpm-lock.yaml
+COPY package.json pnpm-lock.yaml ./
+
+# Install only production dependencies
+RUN pnpm install --prod
+
+# Copy the rest of the application code
+COPY . .
+
+# Ensure dist directory is clean before building
+RUN rm -rf dist && pnpm run build
+
+# Command to start the production application
+CMD ["pnpm", "start:prod"]
