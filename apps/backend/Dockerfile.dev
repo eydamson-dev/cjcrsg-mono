@@ -1,6 +1,9 @@
 # Using Node.js 20.9.0 LTS
 FROM node:20.9.0-slim
 
+# Install procps for the `ps` command
+RUN apt-get update && apt-get install -y procps
+
 # Install pnpm globally
 RUN npm install -g pnpm
 

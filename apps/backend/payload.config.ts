@@ -1,11 +1,26 @@
 import { buildConfig } from 'payload/config';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
-import { webpackBundler } from '@payloadcms/bundler-webpack';
+import { viteBundler } from '@payloadcms/bundler-vite';
 
 export default buildConfig({
   admin: {
-    bundler: webpackBundler()
+    bundler: viteBundler(),
+    vite: (config) => {
+      return {
+        ...config,
+        server: {
+          ...config.server,
+          port: Number(process.env.VITE_PORT),
+          strictPort: true,
+          hmr: {
+            port: Number(process.env.VITE_PORT), // Ensures WebSocket HMR uses the same port
+            protocol: 'ws',
+            host: 'localhost',
+          }
+        }
+      }
+    }
   },
   db: postgresAdapter({
     pool: {
@@ -30,22 +45,5 @@ export default buildConfig({
       ],
     },
   ],
-  globals: [
-    {
-      slug: 'header',
-      fields: [
-        {
-          name: 'nav',
-          type: 'array',
-          fields: [
-            {
-              name: 'page',
-              type: 'relationship',
-              relationTo: 'pages',
-            },
-          ],
-        },
-      ],
-    },
-  ],
+  globals: [],
 })

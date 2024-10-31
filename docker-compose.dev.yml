@@ -9,6 +9,7 @@ services:
       - /app/node_modules
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
+      - "${VITE_PORT}:${VITE_PORT}"
     env_file:
       - .env
     depends_on:
