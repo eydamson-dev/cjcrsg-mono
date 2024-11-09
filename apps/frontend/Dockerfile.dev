@@ -1,0 +1,24 @@
+# Using Node.js 20.9.0 LTS
+FROM node:20.9.0-slim
+
+# Install procps for the `ps` command
+RUN apt-get update && apt-get install -y procps
+
+# Install pnpm globally
+RUN npm install -g pnpm
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy package.json and pnpm-lock.yaml
+COPY package.json pnpm-lock.yaml ./
+
+# Install dependencies with pnpm
+RUN pnpm install
+
+# Copy the rest of the application code
+COPY . .
+
+# Command to run the application
+CMD ["pnpm", "dev"]
+
