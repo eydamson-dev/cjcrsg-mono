@@ -16,6 +16,8 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    members: Member;
+    churches: Church;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -31,6 +33,8 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    members: MembersSelect<false> | MembersSelect<true>;
+    churches: ChurchesSelect<false> | ChurchesSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -615,6 +619,46 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "members".
+ */
+export interface Member {
+  id: string;
+  firstName: string;
+  middleName?: string | null;
+  lastName: string;
+  birthday: string;
+  gender: 'male' | 'female';
+  civilStatus: 'single' | 'married' | 'widowed';
+  subdivision?: string | null;
+  barangay: string;
+  municipality: string;
+  province: string;
+  zipcode?: number | null;
+  email?: string | null;
+  churchAffiliate?: {
+    relationTo: 'churches';
+    value: string | Church;
+  } | null;
+  remarks?: string | null;
+  fullName?: string | null;
+  address?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "churches".
+ */
+export interface Church {
+  id: string;
+  churchName: string;
+  address?: string | null;
+  remarks?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -707,6 +751,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: string | User;
+      } | null)
+    | ({
+        relationTo: 'members';
+        value: string | Member;
+      } | null)
+    | ({
+        relationTo: 'churches';
+        value: string | Church;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1037,6 +1089,41 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "members_select".
+ */
+export interface MembersSelect<T extends boolean = true> {
+  firstName?: T;
+  middleName?: T;
+  lastName?: T;
+  birthday?: T;
+  gender?: T;
+  civilStatus?: T;
+  subdivision?: T;
+  barangay?: T;
+  municipality?: T;
+  province?: T;
+  zipcode?: T;
+  email?: T;
+  churchAffiliate?: T;
+  remarks?: T;
+  fullName?: T;
+  address?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "churches_select".
+ */
+export interface ChurchesSelect<T extends boolean = true> {
+  churchName?: T;
+  address?: T;
+  remarks?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
