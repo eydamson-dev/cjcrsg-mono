@@ -1,0 +1,39 @@
+services:
+  frontend:
+    build:
+      context: ./apps/frontend/
+      dockerfile: Dockerfile.dev
+    container_name: cjcrsg-fe
+    working_dir: /app
+    volumes:
+      - ./apps/frontend:/app
+      - /app/node_modules # Exclude node_modules to prevent conflicts
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+    env_file: .env
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  db:
+    image: mongo:8.0
+    container_name: cjcrsg-db
+    env_file:
+      - .env
+    ports:
+      - "${DATABASE_PORT}:${DATABASE_PORT}"
+    command:
+      - --storageEngine=wiredTiger
+    volumes:
+      - db_data:/data/db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db_data:
+

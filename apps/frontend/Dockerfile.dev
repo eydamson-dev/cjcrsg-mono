@@ -1,0 +1,21 @@
+# Use Node.js Alpine for smaller image size
+FROM node:20.9.0-alpine
+
+# Install pnpm globally
+RUN npm install -g pnpm
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy package.json and pnpm-lock.yaml
+COPY package.json pnpm-lock.yaml ./
+
+# Install dependencies
+RUN pnpm install --frozen-lockfile
+
+# Copy the rest of the application code
+COPY . .
+
+# Default command for development
+CMD ["pnpm", "dev"]
+
