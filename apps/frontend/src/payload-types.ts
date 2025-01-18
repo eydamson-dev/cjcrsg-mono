@@ -17,7 +17,8 @@ export interface Config {
     categories: Category;
     users: User;
     churches: Church;
-    attendance: Attendance;
+    'church-events': ChurchEvent;
+    'church-event-types': ChurchEventType;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -26,7 +27,11 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    users: {
+      attendedEvents: 'church-events';
+    };
+  };
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
@@ -34,7 +39,8 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     churches: ChurchesSelect<false> | ChurchesSelect<true>;
-    attendance: AttendanceSelect<false> | AttendanceSelect<true>;
+    'church-events': ChurchEventsSelect<false> | ChurchEventsSelect<true>;
+    'church-event-types': ChurchEventTypesSelect<false> | ChurchEventTypesSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -121,6 +127,9 @@ export interface Page {
                 } | null);
             url?: string | null;
             label: string;
+            /**
+             * Choose how the link should be rendered.
+             */
             appearance?: ('default' | 'outline') | null;
           };
           id?: string | null;
@@ -131,6 +140,9 @@ export interface Page {
   layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
   meta?: {
     title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
     image?: (string | null) | Media;
     description?: string | null;
   };
@@ -168,6 +180,9 @@ export interface Post {
   categories?: (string | Category)[] | null;
   meta?: {
     title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
     image?: (string | null) | Media;
     description?: string | null;
   };
@@ -303,6 +318,11 @@ export interface Category {
 export interface User {
   id: string;
   name?: string | null;
+  role: 'admin' | 'member';
+  attendedEvents?: {
+    docs?: (string | ChurchEvent)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -313,6 +333,46 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "church-events".
+ */
+export interface ChurchEvent {
+  id: string;
+  eventName: string;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  date: string;
+  eventType?: (string | ChurchEventType)[] | null;
+  location: string;
+  media?: (string | Media)[] | null;
+  attendees?: (string | User)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "church-event-types".
+ */
+export interface ChurchEventType {
+  id: string;
+  eventType: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -350,6 +410,9 @@ export interface CallToActionBlock {
               } | null);
           url?: string | null;
           label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
           appearance?: ('default' | 'outline') | null;
         };
         id?: string | null;
@@ -397,6 +460,9 @@ export interface ContentBlock {
               } | null);
           url?: string | null;
           label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
           appearance?: ('default' | 'outline') | null;
         };
         id?: string | null;
@@ -592,6 +658,9 @@ export interface Form {
       )[]
     | null;
   submitButtonLabel?: string | null;
+  /**
+   * Choose whether to display an on-page message or redirect to a different page after they submit the form.
+   */
   confirmationType?: ('message' | 'redirect') | null;
   confirmationMessage?: {
     root: {
@@ -611,6 +680,9 @@ export interface Form {
   redirect?: {
     url: string;
   };
+  /**
+   * Send custom emails when the form submits. Use comma separated lists to send the same email to multiple recipients. To reference a value from this form, wrap that field's name with double curly brackets, i.e. {{firstName}}. You can use a wildcard {{*}} to output all data and {{*:table}} to format it as an HTML table in the email.
+   */
   emails?:
     | {
         emailTo?: string | null;
@@ -619,6 +691,9 @@ export interface Form {
         replyTo?: string | null;
         emailFrom?: string | null;
         subject: string;
+        /**
+         * Enter the message that should be sent in this email.
+         */
         message?: {
           root: {
             type: string;
@@ -654,21 +729,13 @@ export interface Church {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "attendance".
- */
-export interface Attendance {
-  id: string;
-  date: string;
-  member?: (string | null) | User;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
   id: string;
+  /**
+   * You will need to rebuild the website when changing this field.
+   */
   from: string;
   to?: {
     type?: ('reference' | 'custom') | null;
@@ -704,6 +771,8 @@ export interface FormSubmission {
   createdAt: string;
 }
 /**
+ * This is a collection of automatically created search results. These results are used by the global site search and will be updated automatically as documents in the CMS are created or updated.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "search".
  */
@@ -763,8 +832,12 @@ export interface PayloadLockedDocument {
         value: string | Church;
       } | null)
     | ({
-        relationTo: 'attendance';
-        value: string | Attendance;
+        relationTo: 'church-events';
+        value: string | ChurchEvent;
+      } | null)
+    | ({
+        relationTo: 'church-event-types';
+        value: string | ChurchEventType;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1107,6 +1180,8 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  role?: T;
+  attendedEvents?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -1130,11 +1205,25 @@ export interface ChurchesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "attendance_select".
+ * via the `definition` "church-events_select".
  */
-export interface AttendanceSelect<T extends boolean = true> {
+export interface ChurchEventsSelect<T extends boolean = true> {
+  eventName?: T;
+  description?: T;
   date?: T;
-  member?: T;
+  eventType?: T;
+  location?: T;
+  media?: T;
+  attendees?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "church-event-types_select".
+ */
+export interface ChurchEventTypesSelect<T extends boolean = true> {
+  eventType?: T;
   updatedAt?: T;
   createdAt?: T;
 }
