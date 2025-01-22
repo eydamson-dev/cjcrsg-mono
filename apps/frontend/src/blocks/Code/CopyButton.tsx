@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { CopyIcon } from '@payloadcms/ui/icons/Copy'
+import { Copy } from 'lucide-react'
 import { useState } from 'react'
 
 export function CopyButton({ code }: { code: string }) {
@@ -18,6 +18,7 @@ export function CopyButton({ code }: { code: string }) {
   return (
     <div className="flex justify-end align-middle">
       <Button
+        type='button'
         className="flex gap-1"
         variant={'secondary'}
         onClick={async () => {
@@ -26,7 +27,7 @@ export function CopyButton({ code }: { code: string }) {
         }}
       >
         <p>{text}</p>
-        <CopyIcon />
+        <Copy strokeWidth={1.5} size={16}/>
       </Button>
     </div>
   )

@@ -17,7 +17,6 @@ import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 import { Churches } from './collections/Churches'
-import { Attendance } from './collections/Attendance'
 import { ChurchEvents } from './collections/ChurchEvents'
 import { ChurchEventTypes } from './collections/ChurchEventTypes'
 

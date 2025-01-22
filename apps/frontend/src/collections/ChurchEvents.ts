@@ -10,15 +10,20 @@ export const ChurchEvents: CollectionConfig = {
     read: anyone,
     update: authenticated,
   },
+  admin: {
+    useAsTitle: 'eventName'
+  },
   fields: [
     {
       name: 'eventName',
       type: 'text',
-      required: true
+      required: true,
     },
     {
-      name: 'description',
-      type: 'richText',
+      name: 'eventType',
+      type: 'relationship',
+      relationTo: 'church-event-types',
+      hasMany: true,
     },
     {
       name: 'date',
@@ -28,15 +33,6 @@ export const ChurchEvents: CollectionConfig = {
         date: {
           pickerAppearance: 'dayAndTime'
         }
-      }
-    },
-    {
-      name: 'eventType',
-      type: 'relationship',
-      relationTo: 'church-event-types',
-      hasMany: true,
-      admin: {
-        position: 'sidebar'
       }
     },
     {
@@ -55,6 +51,24 @@ export const ChurchEvents: CollectionConfig = {
       type: 'relationship',
       relationTo: 'users',
       hasMany: true
-    }
+    },
+    {
+      name: 'QRAttendance',
+      type: 'ui',
+      admin: {
+        position: 'sidebar',
+        components: {
+          Field: '@/fields/QRAttendance/QRAttendance#QRAttendance'
+        }
+      }
+    },
+    {
+      name: 'description',
+      label: 'Notes',
+      type: 'textarea',
+      admin: {
+        position: 'sidebar'
+      }
+    },
   ]
 }

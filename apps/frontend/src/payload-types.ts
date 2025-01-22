@@ -31,6 +31,9 @@ export interface Config {
     users: {
       attendedEvents: 'church-events';
     };
+    'church-event-types': {
+      events: 'church-events';
+    };
   };
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
@@ -341,26 +344,12 @@ export interface User {
 export interface ChurchEvent {
   id: string;
   eventName: string;
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  date: string;
   eventType?: (string | ChurchEventType)[] | null;
+  date: string;
   location: string;
   media?: (string | Media)[] | null;
   attendees?: (string | User)[] | null;
+  description?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -371,6 +360,10 @@ export interface ChurchEvent {
 export interface ChurchEventType {
   id: string;
   eventType: string;
+  events?: {
+    docs?: (string | ChurchEvent)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1209,12 +1202,12 @@ export interface ChurchesSelect<T extends boolean = true> {
  */
 export interface ChurchEventsSelect<T extends boolean = true> {
   eventName?: T;
-  description?: T;
-  date?: T;
   eventType?: T;
+  date?: T;
   location?: T;
   media?: T;
   attendees?: T;
+  description?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1224,6 +1217,7 @@ export interface ChurchEventsSelect<T extends boolean = true> {
  */
 export interface ChurchEventTypesSelect<T extends boolean = true> {
   eventType?: T;
+  events?: T;
   updatedAt?: T;
   createdAt?: T;
 }

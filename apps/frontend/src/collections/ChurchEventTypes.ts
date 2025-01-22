@@ -19,5 +19,11 @@ export const ChurchEventTypes: CollectionConfig = {
       type: 'text',
       required: true
     },
+    {
+      name: 'events',
+      type: 'join',
+      collection: 'church-events',
+      on: 'eventType'
+    }
   ]
 }
