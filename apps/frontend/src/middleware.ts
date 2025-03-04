@@ -9,7 +9,7 @@ export default async function middleware(req: NextRequest) {
   const isProtectedRoute = protectedRoutes.includes(path)
 
 
-  if (isProtectedRoute || path === '/auth') {
+  if (isProtectedRoute || path === '/login') {
     const authToken = (await cookies()).get('payload-token')?.value
 
     if (authToken) {
