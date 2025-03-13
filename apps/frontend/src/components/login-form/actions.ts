@@ -1,20 +1,29 @@
 'use server'
 
+import { safeAwait } from "@/utilities/safeAwait"
 import { FormSchema } from "./schema"
+import getPayloadClient from "@/utilities/getPayloadClient"
+import { Result } from "node_modules/payload/dist/auth/operations/login"
+import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 
-export const onLoginAction = async (formData: FormSchema) => {
-  const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/login`
+export const onLoginAction = async (formData: FormSchema): Promise<[Error | null, Result | null]> => {
+  const payload = await getPayloadClient()
+  const { email, password } = formData
 
-  const res = await fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(formData),
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
+  const [error, data] = await safeAwait(payload.login({
+    collection: 'users',
+    data: {
+      email: email,
+      password: password
     },
-  })
+  }))
 
-  const json = await res.json()
+  if (!error && data?.token) {
+    const store = await cookies()
+    store.set('payload-token', data?.token)
+    redirect('/profile')
+  }
 
-  return json
+  return [error, data]
 }

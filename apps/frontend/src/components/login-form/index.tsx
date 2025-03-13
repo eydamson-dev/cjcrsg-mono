@@ -27,19 +27,18 @@ export function LoginForm({
   async function onSubmit(data: FormSchema) {
     // TODO: Call login api
 
-    const res = await onLoginAction(data)
-    console.log({ res })
-
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+    const [error] = await onLoginAction(data)
+    if (error) {
+      toast({
+        title: error.name,
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">{error.message}</code>
+          </pre>
+        ),
+      })
+    }
   }
-
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
