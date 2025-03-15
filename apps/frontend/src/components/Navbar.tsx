@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from "react";
 import {
   NavigationMenu,
@@ -72,9 +74,8 @@ export const Navbar = () => {
                 <Menu
                   className="flex md:hidden h-5 w-5"
                   onClick={() => setIsOpen(true)}
-                >
-                  <span className="sr-only">Menu Icon</span>
-                </Menu>
+                  aria-label="menu icon"
+                />
               </SheetTrigger>
 
               <SheetContent side={"left"}>
@@ -103,7 +104,7 @@ export const Navbar = () => {
                       variant: "secondary",
                     })}`}
                   >
-                    {/*<GitHubLogoIcon className="mr-2 w-5 h-5" />*/}
+                    <GitHubLogoIcon className="mr-2 w-5 h-5" />
                     Github
                   </a>
                 </nav>
