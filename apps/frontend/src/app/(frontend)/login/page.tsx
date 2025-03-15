@@ -1,12 +1,11 @@
-import type { Metadata } from 'next/types'
-import React from 'react'
-import PageClient from './page.client'
 import { LoginForm } from '@/components/login-form'
+import type { Metadata } from 'next/types'
+import PageClient from './page.client'
 
 export default function Page() {
 
   return (
-     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
+    <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
       <PageClient />
       <div className="w-full max-w-sm">
         <LoginForm />
