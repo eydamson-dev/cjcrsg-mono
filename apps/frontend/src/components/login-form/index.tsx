@@ -7,8 +7,8 @@ import { cn } from "@/utilities"
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from "react-hook-form"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
-import { onLoginAction } from "./actions"
-import { FormSchema, loginSchema } from "./schema"
+import { onLoginAction } from "@/app/(frontend)/actions/auth"
+import { LoginFormSchema, LoginSchema } from "@/app/(frontend)/actions/auth-schema"
 
 export function LoginForm({
   className,
@@ -16,15 +16,15 @@ export function LoginForm({
 }: React.ComponentPropsWithoutRef<"div">) {
 
   const { toast } = useToast()
-  const form = useForm<FormSchema>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<LoginFormSchema>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: '',
       password: ''
     }
   })
 
-  async function onSubmit(data: FormSchema) {
+  async function onSubmit(data: LoginFormSchema) {
     // TODO: Call login api
 
     const [error] = await onLoginAction(data)

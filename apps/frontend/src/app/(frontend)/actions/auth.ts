@@ -1,13 +1,13 @@
 'use server'
 
 import { safeAwait } from "@/utilities/safeAwait"
-import { FormSchema } from "./schema"
+import { LoginFormSchema } from "./auth-schema"
 import getPayloadClient from "@/utilities/getPayloadClient"
 import { Result } from "node_modules/payload/dist/auth/operations/login"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
-export const onLoginAction = async (formData: FormSchema): Promise<[Error | null, Result | null]> => {
+export const onLoginAction = async (formData: LoginFormSchema): Promise<[Error | null, Result | null]> => {
   const payload = await getPayloadClient()
   const { email, password } = formData
 
@@ -26,4 +26,12 @@ export const onLoginAction = async (formData: FormSchema): Promise<[Error | null
   }
 
   return [error, data]
+}
+
+export const logoutAction = async () => {
+  const store = await cookies()
+  store.delete('payload-token')
+  console.log('hey')
+
+  redirect('/login')
 }
