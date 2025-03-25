@@ -31,7 +31,6 @@ export const onLoginAction = async (formData: LoginFormSchema): Promise<[Error |
 export const logoutAction = async () => {
   const store = await cookies()
   store.delete('payload-token')
-  console.log('hey')
 
   redirect('/login')
 }
