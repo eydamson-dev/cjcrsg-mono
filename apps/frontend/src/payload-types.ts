@@ -280,6 +280,7 @@ export interface Media {
     };
     [k: string]: unknown;
   } | null;
+  tag?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1120,6 +1121,7 @@ export interface PostsSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
+  tag?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
