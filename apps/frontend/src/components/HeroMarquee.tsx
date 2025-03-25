@@ -9,7 +9,7 @@ const MarqueColumn = ({ idx, imageArr }: MarqueColumnProps) => {
   const placeholder = 'https://placehold.co/600x400?text=placeholder';
 
   return (
-    <Marquee reverse={idx === 1 ? true : false} pauseOnHover vertical className="[--duration:20s]">
+    <Marquee reverse={idx % 2 === 0 ? true : false} pauseOnHover vertical className="[--duration:20s]">
       {imageArr.map(image => (
         <Image
           key={image.id}
