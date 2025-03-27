@@ -11,6 +11,7 @@ import { Pricing } from "@/components/Pricing";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { Services } from "@/components/Services";
 import { Sponsors } from "@/components/Sponsors";
+import { StatementOfFaith } from "@/components/StatementOfFaith";
 import { Team } from "@/components/Team";
 import { Testimonials } from "@/components/Testimonials";
 
@@ -19,8 +20,8 @@ function Home() {
     <>
       <Navbar />
       <Hero />
+      <StatementOfFaith />
       <Sponsors />
-      <About />
       <HowItWorks />
       <Features />
       <Services />
