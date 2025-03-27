@@ -1,25 +1,20 @@
-'use client'
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
-} from "@/components/ui/navigation-menu";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+} from '@/components/ui/navigation-menu';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { buttonVariants } from "./ui/button";
-import { Menu } from "lucide-react";
-import { ModeToggle } from "./mode-toggle";
-import { LogoIcon } from "./Icons";
-import Link from "next/link";
+import { GitHubLogoIcon } from '@radix-ui/react-icons';
+import { buttonVariants } from './ui/button';
+import { CircleUserIcon, Menu } from 'lucide-react';
+import { ModeToggle } from './mode-toggle';
+import Link from 'next/link';
+import Image from 'next/image';
+import CJC_Logo from '../../public/CJC-Logo.svg';
 
 interface RouteProps {
   href: string;
@@ -28,20 +23,20 @@ interface RouteProps {
 
 const routeList: RouteProps[] = [
   {
-    href: "#features",
-    label: "Features",
+    href: '#features',
+    label: 'Features',
   },
   {
-    href: "#testimonials",
-    label: "Testimonials",
+    href: '#testimonials',
+    label: 'Testimonials',
   },
   {
-    href: "#pricing",
-    label: "Pricing",
+    href: '#pricing',
+    label: 'Pricing',
   },
   {
-    href: "#faq",
-    label: "FAQ",
+    href: '#faq',
+    label: 'FAQ',
   },
 ];
 
@@ -52,12 +47,8 @@ export const Navbar = () => {
       <NavigationMenu className="mx-auto">
         <NavigationMenuList className="container h-14 px-4 w-screen flex justify-between ">
           <NavigationMenuItem className="font-bold flex">
-            <Link
-              rel="noreferrer noopener"
-              href="/"
-              className="ml-2 font-bold text-xl flex"
-            >
-              <LogoIcon />
+            <Link href="/" className="ml-2 font-bold text-xl flex gap-2">
+              <Image width={24} height={24} src={CJC_Logo} alt="logo" />
               CJCRSG
             </Link>
           </NavigationMenuItem>
@@ -66,10 +57,7 @@ export const Navbar = () => {
           <span className="flex md:hidden">
             <ModeToggle />
 
-            <Sheet
-              open={isOpen}
-              onOpenChange={setIsOpen}
-            >
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger className="px-2">
                 <Menu
                   className="flex md:hidden h-5 w-5"
@@ -78,11 +66,9 @@ export const Navbar = () => {
                 />
               </SheetTrigger>
 
-              <SheetContent side={"left"}>
+              <SheetContent side={'left'}>
                 <SheetHeader>
-                  <SheetTitle className="font-bold text-xl">
-                    Shadcn/React
-                  </SheetTitle>
+                  <SheetTitle className="font-bold text-xl">Shadcn/React</SheetTitle>
                 </SheetHeader>
                 <nav className="flex flex-col justify-center items-center gap-2 mt-4">
                   {routeList.map(({ href, label }: RouteProps) => (
@@ -91,7 +77,7 @@ export const Navbar = () => {
                       key={label}
                       href={href}
                       onClick={() => setIsOpen(false)}
-                      className={buttonVariants({ variant: "ghost" })}
+                      className={buttonVariants({ variant: 'ghost' })}
                     >
                       {label}
                     </a>
@@ -101,11 +87,11 @@ export const Navbar = () => {
                     href="https://github.com/leoMirandaa/shadcn-landing-page.git"
                     target="_blank"
                     className={`w-[110px] border ${buttonVariants({
-                      variant: "secondary",
+                      variant: 'secondary',
                     })}`}
                   >
-                    <GitHubLogoIcon className="mr-2 w-5 h-5" />
-                    Github
+                    <CircleUserIcon className="mr-2 w-5 h-5" />
+                    Login
                   </a>
                 </nav>
               </SheetContent>
@@ -120,7 +106,7 @@ export const Navbar = () => {
                 href={route.href}
                 key={i}
                 className={`text-[17px] ${buttonVariants({
-                  variant: "ghost",
+                  variant: 'ghost',
                 })}`}
               >
                 {route.label}
@@ -133,10 +119,10 @@ export const Navbar = () => {
               rel="noreferrer noopener"
               href="https://github.com/leoMirandaa/shadcn-landing-page.git"
               target="_blank"
-              className={`border ${buttonVariants({ variant: "secondary" })}`}
+              className={`border ${buttonVariants({ variant: 'secondary' })}`}
             >
-              <GitHubLogoIcon className="mr-2 w-5 h-5" />
-              Github
+              <CircleUserIcon className="mr-2 w-5 h-5" />
+              Login
             </a>
 
             <ModeToggle />
