@@ -10,7 +10,16 @@
   "arrowParens": "avoid",
   "endOfLine": "lf",
   "plugins": ["@trivago/prettier-plugin-sort-imports"],
-  "importOrder": ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
+  "importOrder": [
+    "^react$",
+    "^payload$",
+    "^@payloadcms/(.*)$",
+    "<THIRD_PARTY_MODULES>",
+    "^@/utilities/(.*)$",
+    "^@/hooks/(.*)$",
+    "^@/components/(.*)$",
+    "^[./]"
+  ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }
