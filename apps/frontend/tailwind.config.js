@@ -46,8 +46,9 @@ const config = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'marquee': "marquee var(--duration) linear infinite",
-        'marquee-vertical': "marquee-vertical var(--duration) linear infinite",
+        marquee: 'marquee var(--duration) linear infinite',
+        'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
+        move: 'move 5s linear infinite',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -105,13 +106,17 @@ const config = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
-        'marquee': {
-          from: { transform: "translateX(0)" },
-          to: { transform: "translateX(calc(-100% - var(--gap)))" },
+        marquee: {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(calc(-100% - var(--gap)))' },
         },
         'marquee-vertical': {
-          from: { transform: "translateY(0)" },
-          to: { transform: "translateY(calc(-100% - var(--gap)))" },
+          from: { transform: 'translateY(0)' },
+          to: { transform: 'translateY(calc(-100% - var(--gap)))' },
+        },
+        move: {
+          '0%': { transform: 'translateX(-200px)' },
+          '100%': { transform: 'translateX(200px)' },
         },
       },
       typography: ({ theme }) => ({
@@ -155,6 +160,6 @@ const config = {
       }),
     },
   },
-}
+};
 
-export default config
+export default config;

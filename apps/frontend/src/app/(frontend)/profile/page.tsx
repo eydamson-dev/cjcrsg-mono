@@ -1,17 +1,30 @@
-"use client"
+'use client';
 
-import { Button } from '@/components/ui/button'
-import React from 'react'
-import { logoutAction } from '@/app/(frontend)/actions/auth'
+import React from 'react';
+
+import { logoutAction } from '@/app/(frontend)/actions/auth';
+
+import { AppSidebar } from '@/components/app-sidebar';
+import { Button } from '@/components/ui/button';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 
 export default function Profile() {
   return (
     <>
-      <div> Profile</div>
-      <Button onClick={async () => {
-        await logoutAction()
-      }}>Logout</Button>
+      <SidebarProvider>
+        <AppSidebar />
+        <main>
+          <SidebarTrigger />
+          <div> Profile</div>
+          <Button
+            onClick={async () => {
+              await logoutAction();
+            }}
+          >
+            Logout
+          </Button>
+        </main>
+      </SidebarProvider>
     </>
-  )
+  );
 }
-
