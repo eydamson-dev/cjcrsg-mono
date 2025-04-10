@@ -1,11 +1,3 @@
-'use client';
-
-import React from 'react';
-
-import { logoutAction } from '@/app/(frontend)/actions/auth';
-
-import { Button } from '@/components/ui/button';
-
 import { AppSidebar } from "@/components/app-sidebar"
 import {
   Breadcrumb,
@@ -22,9 +14,8 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 
-export default function Profile() {
+export default function Page() {
   return (
-    <>
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
@@ -60,7 +51,5 @@ export default function Profile() {
         </div>
       </SidebarInset>
     </SidebarProvider>
-    </>
-  );
+  )
 }
-
