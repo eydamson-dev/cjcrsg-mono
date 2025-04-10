@@ -15,7 +15,7 @@ import type {
 } from '@/payload-types'
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
-import { cn } from '@/utilities/cn'
+import { cn } from '@/lib/utils/cn'
 
 type NodeTypes =
   | DefaultNodeTypes

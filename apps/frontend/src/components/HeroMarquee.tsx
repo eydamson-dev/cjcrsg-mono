@@ -1,5 +1,5 @@
 import { Marquee } from '@/components/magicui/marquee';
-import getPayloadClient from '@/utilities/getPayloadClient';
+import getPayloadClient from '@/lib/utils/getPayloadClient';
 import Image from 'next/image';
 import type { Media as MediaType } from '@/payload-types';
 
@@ -56,8 +56,8 @@ export async function HeroMarquee() {
       {marqueeColumns.map((imageArr, idx) => (
         <MarqueColumn key={idx} idx={idx} imageArr={imageArr} />
       ))}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-background"></div>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-background"></div>
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-1/4 bg-linear-to-b from-background"></div>
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-linear-to-t from-background"></div>
     </div>
   );
 }

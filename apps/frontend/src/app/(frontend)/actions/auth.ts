@@ -1,8 +1,8 @@
 'use server'
 
-import { safeAwait } from "@/utilities/safeAwait"
+import { safeAwait } from "@/lib/utils/safeAwait"
 import { LoginFormSchema } from "./auth-schema"
-import getPayloadClient from "@/utilities/getPayloadClient"
+import getPayloadClient from "@/lib/utils/getPayloadClient"
 import { Result } from "node_modules/payload/dist/auth/operations/login"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
