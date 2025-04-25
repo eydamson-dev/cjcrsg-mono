@@ -1,6 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+
+import { CircleUserIcon, Menu } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -8,13 +13,9 @@ import {
 } from '@/components/ui/navigation-menu';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 
-import { GitHubLogoIcon } from '@radix-ui/react-icons';
-import { buttonVariants } from './ui/button';
-import { CircleUserIcon, Menu } from 'lucide-react';
-import { ModeToggle } from './mode-toggle';
-import Link from 'next/link';
-import Image from 'next/image';
 import CJC_Logo from '../../public/CJC-Logo.svg';
+import { ModeToggle } from './mode-toggle';
+import { buttonVariants } from './ui/button';
 
 interface RouteProps {
   href: string;
@@ -24,19 +25,19 @@ interface RouteProps {
 const routeList: RouteProps[] = [
   {
     href: '#features',
-    label: 'Features',
+    label: 'Our Faith',
   },
   {
     href: '#testimonials',
-    label: 'Testimonials',
+    label: 'News',
   },
   {
     href: '#pricing',
-    label: 'Pricing',
+    label: 'Schedules',
   },
   {
     href: '#faq',
-    label: 'FAQ',
+    label: 'Contact us',
   },
 ];
 
@@ -115,16 +116,14 @@ export const Navbar = () => {
           </nav>
 
           <div className="hidden md:flex gap-2">
-            <a
+            <Link
               rel="noreferrer noopener"
-              href="https://github.com/leoMirandaa/shadcn-landing-page.git"
-              target="_blank"
+              href="/login"
               className={`border ${buttonVariants({ variant: 'secondary' })}`}
             >
               <CircleUserIcon className="mr-2 w-5 h-5" />
               Login
-            </a>
-
+            </Link>
             <ModeToggle />
           </div>
         </NavigationMenuList>

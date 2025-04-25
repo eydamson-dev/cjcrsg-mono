@@ -3,14 +3,14 @@ import type { Metadata } from 'next'
 import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
 import React from 'react'
-import { cn } from 'src/utilities/cn'
+import { cn } from '@/lib/utils/cn'
 
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import { mergeOpenGraph } from '@/lib/utils/mergeOpenGraph'
 
 import { Toaster } from '@/components/ui/toaster'
-import { getServerSideURL } from '@/utilities/getURL'
+import { getServerSideURL } from '@/lib/utils/getURL'
 import './globals.css'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
