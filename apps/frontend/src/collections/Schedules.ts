@@ -2,8 +2,8 @@ import type { CollectionConfig } from "payload";
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
 
-export const ChurchEvents: CollectionConfig = {
-  slug: 'church-events',
+export const Schedules: CollectionConfig = {
+  slug: 'schedules',
   access: {
     create: authenticated,
     delete: authenticated,
@@ -11,18 +11,18 @@ export const ChurchEvents: CollectionConfig = {
     update: authenticated,
   },
   admin: {
-    useAsTitle: 'eventName'
+    useAsTitle: 'title'
   },
   fields: [
     {
-      name: 'eventName',
+      name: 'title',
       type: 'text',
       required: true,
     },
     {
-      name: 'eventType',
+      name: 'scheduleTag',
       type: 'relationship',
-      relationTo: 'church-event-types',
+      relationTo: 'schedule-tags',
       hasMany: true,
     },
     {

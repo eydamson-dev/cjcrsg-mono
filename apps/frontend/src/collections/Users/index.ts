@@ -56,12 +56,12 @@ export const Users: CollectionConfig = {
       required: true
     },
     {
-      name: 'attendedEvents',
+      name: 'attendedSchedules',
       type: 'join',
-      collection: 'church-events',
+      collection: 'schedules',
       on: 'attendees',
       admin: {
-        defaultColumns: ['eventType', 'eventName', 'date'],
+        defaultColumns: ['scheduleTag', 'title', 'date'],
       }
     }
   ],

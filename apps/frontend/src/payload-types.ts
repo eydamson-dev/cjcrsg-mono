@@ -72,8 +72,8 @@ export interface Config {
     categories: Category;
     users: User;
     churches: Church;
-    'church-events': ChurchEvent;
-    'church-event-types': ChurchEventType;
+    schedules: Schedule;
+    'schedule-tags': ScheduleTag;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -84,10 +84,10 @@ export interface Config {
   };
   collectionsJoins: {
     users: {
-      attendedEvents: 'church-events';
+      attendedSchedules: 'schedules';
     };
-    'church-event-types': {
-      events: 'church-events';
+    'schedule-tags': {
+      schedules: 'schedules';
     };
   };
   collectionsSelect: {
@@ -97,8 +97,8 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     churches: ChurchesSelect<false> | ChurchesSelect<true>;
-    'church-events': ChurchEventsSelect<false> | ChurchEventsSelect<true>;
-    'church-event-types': ChurchEventTypesSelect<false> | ChurchEventTypesSelect<true>;
+    schedules: SchedulesSelect<false> | SchedulesSelect<true>;
+    'schedule-tags': ScheduleTagsSelect<false> | ScheduleTagsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -378,8 +378,8 @@ export interface User {
   id: string;
   name?: string | null;
   role: 'admin' | 'member';
-  attendedEvents?: {
-    docs?: (string | ChurchEvent)[];
+  attendedSchedules?: {
+    docs?: (string | Schedule)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
@@ -396,12 +396,12 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "church-events".
+ * via the `definition` "schedules".
  */
-export interface ChurchEvent {
+export interface Schedule {
   id: string;
-  eventName: string;
-  eventType?: (string | ChurchEventType)[] | null;
+  title: string;
+  scheduleTag?: (string | ScheduleTag)[] | null;
   date: string;
   location: string;
   media?: (string | Media)[] | null;
@@ -412,13 +412,13 @@ export interface ChurchEvent {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "church-event-types".
+ * via the `definition` "schedule-tags".
  */
-export interface ChurchEventType {
+export interface ScheduleTag {
   id: string;
-  eventType: string;
-  events?: {
-    docs?: (string | ChurchEvent)[];
+  tag: string;
+  schedules?: {
+    docs?: (string | Schedule)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
@@ -883,12 +883,12 @@ export interface PayloadLockedDocument {
         value: string | Church;
       } | null)
     | ({
-        relationTo: 'church-events';
-        value: string | ChurchEvent;
+        relationTo: 'schedules';
+        value: string | Schedule;
       } | null)
     | ({
-        relationTo: 'church-event-types';
-        value: string | ChurchEventType;
+        relationTo: 'schedule-tags';
+        value: string | ScheduleTag;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1233,7 +1233,7 @@ export interface CategoriesSelect<T extends boolean = true> {
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
   role?: T;
-  attendedEvents?: T;
+  attendedSchedules?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -1257,11 +1257,11 @@ export interface ChurchesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "church-events_select".
+ * via the `definition` "schedules_select".
  */
-export interface ChurchEventsSelect<T extends boolean = true> {
-  eventName?: T;
-  eventType?: T;
+export interface SchedulesSelect<T extends boolean = true> {
+  title?: T;
+  scheduleTag?: T;
   date?: T;
   location?: T;
   media?: T;
@@ -1272,11 +1272,11 @@ export interface ChurchEventsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "church-event-types_select".
+ * via the `definition` "schedule-tags_select".
  */
-export interface ChurchEventTypesSelect<T extends boolean = true> {
-  eventType?: T;
-  events?: T;
+export interface ScheduleTagsSelect<T extends boolean = true> {
+  tag?: T;
+  schedules?: T;
   updatedAt?: T;
   createdAt?: T;
 }

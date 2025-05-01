@@ -17,8 +17,8 @@ import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from '@/lib/utils/getURL'
 import { Churches } from './collections/Churches'
-import { ChurchEvents } from './collections/ChurchEvents'
-import { ChurchEventTypes } from './collections/ChurchEventTypes'
+import { Schedules } from './collections/Schedules'
+import { ScheduleTags } from './collections/ScheduleTags'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -65,7 +65,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Churches, ChurchEvents, ChurchEventTypes],
+  collections: [Pages, Posts, Media, Categories, Users, Churches, Schedules, ScheduleTags],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [

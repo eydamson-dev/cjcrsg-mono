@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { getCurrentUser } from '@/actions/auth';
-import { getChurchEvents } from '@/actions/church-events';
-import { ChurchEvent } from '@/payload-types';
+import { getSchedules } from '@/actions/schedules';
+import { Schedule } from '@/payload-types';
 import { redirect } from 'next/navigation';
 
 import { AppSidebar } from '@/components/app-sidebar';
@@ -28,7 +28,7 @@ import {
 
 export default async function Profile() {
   const user = await getCurrentUser();
-  const churchEvents = (await getChurchEvents()).docs || [];
+  const schedules = (await getSchedules()).docs || [];
 
   if (!user) redirect('/login');
 
@@ -64,17 +64,17 @@ export default async function Profile() {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="text-left">Date</TableHead>
-                        <TableHead className="text-left">Event</TableHead>
-                        <TableHead className="text-left">Location</TableHead>
+                        <TableHead className="text-left">What</TableHead>
+                        <TableHead className="text-left">When</TableHead>
+                        <TableHead className="text-left">Where</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {churchEvents.map((event: ChurchEvent) => (
-                        <TableRow key={event.id}>
-                          <TableCell>{new Date(event.date).toLocaleDateString()}</TableCell>
-                          <TableCell>{event.eventName}</TableCell>
-                          <TableCell>{event.location}</TableCell>
+                      {schedules.map((sched: Schedule) => (
+                        <TableRow key={sched.id} className="hover:bg-muted">
+                          <TableCell>{sched.title}</TableCell>
+                          <TableCell>{new Date(sched.date).toLocaleDateString()}</TableCell>
+                          <TableCell>{sched.location}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
