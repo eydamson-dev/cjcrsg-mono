@@ -4,6 +4,7 @@ import { PaginatedDocs } from 'payload';
 
 import getPayloadClient from '@/lib/utils/getPayloadClient';
 import { Schedule } from '@/payload-types';
+import { safeAwait } from '@/lib/utils/safeAwait';
 
 export const getSchedules = async (): Promise<PaginatedDocs<Schedule>> => {
   const payload = await getPayloadClient();
@@ -11,12 +12,16 @@ export const getSchedules = async (): Promise<PaginatedDocs<Schedule>> => {
   return events;
 };
 
-export const getScheduleById = async (id: string): Promise<Schedule | null> => {
+export const getScheduleById = async (id: string): Promise<[Error | null, Schedule | null]> => {
   const payload = await getPayloadClient();
-  return payload.findByID({
-    id,
-    collection: 'schedules',
-  })
+  const data = await safeAwait<Schedule>(
+    payload.findByID({
+      collection: 'schedules',
+      id,
+    })
+  )
+
+  return data
 }
 
 

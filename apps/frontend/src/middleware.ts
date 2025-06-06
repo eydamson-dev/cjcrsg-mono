@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 
-const protectedRoutes = ['/dashboard', '/profile']
+const protectedRoutes = ['/dashboard', '/profile', '/attendance']
 
 export default async function middleware(req: NextRequest) {
   const redirectUrl = req.nextUrl.clone()

@@ -1,23 +1,17 @@
-import {
-  getScheduleById,
-} from '@/actions/schedules';
+import { getCurrentUser } from '@/actions/auth';
+import { getScheduleById } from '@/actions/schedules';
+import { redirect } from 'next/navigation';
+
+import { AttendanceGreetings } from './components/AttendanceGreetings';
 
 async function Attendance({ params }) {
+  const user = await getCurrentUser();
   const { id } = await params;
-  const event = await getScheduleById(id);
+  const [error, event] = await getScheduleById(id);
 
-  if (!event) {
-    return <div>Loading...</div>;
-  }
+  if (error || !event || !user) return redirect('/profile');
 
-  return (
-    <div>
-      <h1>Attendance</h1>
-      <h2>Event Date: {new Date(event.date).toLocaleDateString()}</h2>
-      <h2>Event: {event.eventName}</h2>
-      <p>Description: {event.description}</p>
-    </div>
-  );
+  return <AttendanceGreetings event={event} user={user} />;
 }
 
 export default Attendance;
