@@ -3,8 +3,8 @@
 import { PaginatedDocs } from 'payload';
 
 import getPayloadClient from '@/lib/utils/getPayloadClient';
-import { Schedule } from '@/payload-types';
 import { safeAwait } from '@/lib/utils/safeAwait';
+import { Schedule, User } from '@/payload-types';
 
 export const getSchedules = async (): Promise<PaginatedDocs<Schedule>> => {
   const payload = await getPayloadClient();
@@ -19,15 +19,39 @@ export const getScheduleById = async (id: string): Promise<[Error | null, Schedu
       collection: 'schedules',
       id,
     })
-  )
+  );
 
-  return data
-}
+  return data;
+};
 
+export const confirmAttendance = async (
+  event: Schedule,
+  user: User
+): Promise<[Error | null, Schedule | null]> => {
+  const payload = await getPayloadClient();
+  const attendees = event.attendees?.map((attendee: User) => attendee.id);
+  const hasAttendance = attendees?.includes(user.id);
 
-export const confirmAttendance = async (eventId: string) => {
-  // Implement the logic to confirm attendance here
-  console.log(`Attendance confirmed for event: ${eventId}`);
-  // You might want to update the database or perform other actions here
-  return { success: true, message: 'Attendance confirmed successfully!' };
+  if (!hasAttendance) {
+    attendees?.push(user.id);
+    const [error, data] = await safeAwait(
+      payload.update({
+        collection: 'schedules',
+        id: event.id,
+        data: {
+          attendees,
+        },
+      })
+    );
+
+    if (!error) {
+      console.log(`Attendance confirmed for event: ${event.title}`);
+      return [null, data];
+    } else {
+      console.error(`Error: ${error.stack}`);
+      return [error, null];
+    }
+  }
+
+  return [null, event];
 };
