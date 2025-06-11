@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
@@ -86,7 +86,10 @@ export function LoginForm({
                   )}
                 >
                 </FormField>
-                <Button className="w-full" type="submit" disabled={form.formState.isSubmitting}>Login</Button>
+                <Button className="w-full" type="submit" disabled={form.formState.isSubmitting}>
+                  {form.formState.isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  Login
+                </Button>
                 <Link href="/">
                   <Button className="w-full" variant="secondary"><ArrowLeft className="mr-2 h-4 w-4" />Back to Home</Button>
                 </Link>
@@ -132,7 +135,10 @@ export function LoginForm({
               )}
             >
             </FormField>
-            <Button className="w-full" type="submit" disabled={form.formState.isSubmitting}>Login</Button>
+            <Button className="w-full" type="submit" disabled={form.formState.isSubmitting}>
+              {form.formState.isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              Login
+            </Button>
             <Link href="/">
               <Button className="w-full" variant="secondary"><ArrowLeft className="mr-2 h-4 w-4" />Back to Home</Button>
             </Link>
