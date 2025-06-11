@@ -16,6 +16,6 @@ export default function Page() {
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Member login`,
+    title: `Account login`,
   }
 }
