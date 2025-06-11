@@ -31,6 +31,8 @@ export const onLoginAction = async (
     redirect('/profile');
   }
 
+  payload.logger.error(`Error: ${error?.stack}`);
+
   return [error, data];
 };
 
