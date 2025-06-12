@@ -1,9 +1,10 @@
-import { LoginForm } from '@/components/login-form'
-import type { Metadata } from 'next/types'
-import PageClient from './page.client'
+import type { Metadata } from 'next/types';
 
-export default function Page() {
+import { LoginForm } from '@/components/login-form';
 
+import PageClient from './page.client';
+
+export default function LoginPage() {
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
       <PageClient />
@@ -11,11 +12,11 @@ export default function Page() {
         <LoginForm />
       </div>
     </div>
-  )
+  );
 }
 
 export function generateMetadata(): Metadata {
   return {
     title: `Account login`,
-  }
+  };
 }

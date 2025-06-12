@@ -1,5 +1,4 @@
 'use client';
-'use client';
 
 import { onLoginAction } from '@/app/(frontend)/actions/auth';
 import { LoginFormSchema, LoginSchema } from '@/app/(frontend)/actions/auth-schema';
@@ -24,7 +23,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/form';
+} from '@/components/ui/form';
 
 interface LoginFormFieldsProps {
   form: UseFormReturn<LoginFormSchema>;
