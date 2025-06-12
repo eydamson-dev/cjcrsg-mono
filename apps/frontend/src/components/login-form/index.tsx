@@ -1,20 +1,30 @@
-"use client"
+'use client';
+'use client';
 
-"use client"
+import { onLoginAction } from '@/app/(frontend)/actions/auth';
+import { LoginFormSchema, LoginSchema } from '@/app/(frontend)/actions/auth-schema';
+import { cn } from '@/lib/utils';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ArrowLeft, Loader2 } from 'lucide-react';
+import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+import { UseFormReturn } from 'react-hook-form';
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import Link from "next/link"
-import { ArrowLeft, Loader2 } from "lucide-react";
-import { Input } from "@/components/ui/input"
-import { useToast } from "@/hooks/use-toast"
-import { cn } from "@/lib/utils"
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from "react-hook-form"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
-import { onLoginAction } from "@/app/(frontend)/actions/auth"
-import { LoginFormSchema, LoginSchema } from "@/app/(frontend)/actions/auth-schema"
-import { UseFormReturn } from "react-hook-form";
+import { useToast } from '@/hooks/use-toast';
+
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '../ui/form';
 
 interface LoginFormFieldsProps {
   form: UseFormReturn<LoginFormSchema>;
@@ -30,65 +40,64 @@ function LoginFormFields({ form, onSubmit }: LoginFormFieldsProps) {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
-                Email
-              </FormLabel>
+              <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input placeholder="Enter your email" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
-        >
-        </FormField>
+        ></FormField>
         <FormField
           control={form.control}
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
-                Password
-              </FormLabel>
+              <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="Enter your password" autoComplete="on" {...field} />
+                <Input
+                  type="password"
+                  placeholder="Enter your password"
+                  autoComplete="on"
+                  {...field}
+                />
               </FormControl>
-              <FormDescription>If you have problem with your credentials please contact the media team.</FormDescription>
+              <FormDescription>
+                If you have problem with your credentials please contact the media team.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
-        >
-        </FormField>
+        ></FormField>
         <Button className="w-full" type="submit" disabled={form.formState.isSubmitting}>
           {form.formState.isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Login
         </Button>
         <Link href="/">
-          <Button className="w-full" variant="secondary"><ArrowLeft className="mr-2 h-4 w-4" />Back to Home</Button>
+          <Button className="w-full" variant="secondary">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Home
+          </Button>
         </Link>
       </form>
     </Form>
   );
 }
 
-
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<"div">) {
-
-  const { toast } = useToast()
+export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
+  const { toast } = useToast();
   const form = useForm<LoginFormSchema>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: '',
-      password: ''
-    }
-  })
+      password: '',
+    },
+  });
 
   async function onSubmit(data: LoginFormSchema) {
     // TODO: Call login api
 
-    const [error] = await onLoginAction(data)
+    const [error] = await onLoginAction(data);
     if (error) {
       toast({
         title: error.name,
@@ -97,12 +106,12 @@ export function LoginForm({
             <code className="text-white">{error.message}</code>
           </pre>
         ),
-      })
+      });
     }
   }
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn('flex flex-col gap-6', className)} {...props}>
       <div>
         <div className="md:block hidden">
           <Card>
@@ -124,9 +133,9 @@ export function LoginForm({
         </div>
       </div>
       <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary  ">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our <a href="#">Terms of Service</a> and{' '}
+        <a href="#">Privacy Policy</a>.
       </div>
     </div>
-  )
+  );
 }
