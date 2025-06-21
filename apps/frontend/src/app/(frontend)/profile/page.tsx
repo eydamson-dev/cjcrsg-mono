@@ -2,7 +2,9 @@ import React from 'react';
 
 import { getCurrentUser } from '@/actions/auth';
 import { getSchedules } from '@/actions/schedules';
+import { getMeUser } from '@/lib/utils/getMeUser';
 import { Schedule } from '@/payload-types';
+import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import { AppSidebar } from '@/components/app-sidebar';
@@ -87,4 +89,12 @@ export default async function Profile() {
       </SidebarProvider>
     </>
   );
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { user } = await getMeUser();
+
+  return {
+    title: `${user?.name || 'No user logged in'}`,
+  };
 }
