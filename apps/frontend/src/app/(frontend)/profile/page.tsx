@@ -93,8 +93,10 @@ export default async function Profile() {
 
 export async function generateMetadata(): Promise<Metadata> {
   const { user } = await getMeUser();
+  const name = user?.name || '';
 
   return {
-    title: `${user?.name || 'No user logged in'}`,
+    title: `${name}`,
+    description: `CJCRSG Profile page for ${name}`,
   };
 }
