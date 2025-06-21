@@ -3,8 +3,6 @@ import type { CollectionConfig } from 'payload'
 import { authenticated } from '../../access/authenticated'
 import { admin } from '@/access/isAdmin'
 
-import redirectUserIfNotAdmin from './hooks/redirectUserIfNotAdmin'
-
 const isCreatingAdminUser = (data: any) => {
   return data?.role === 'admin'
 }
@@ -12,11 +10,7 @@ const isCreatingAdminUser = (data: any) => {
 export const Users: CollectionConfig = {
   slug: 'users',
   access: {
-    admin: (args) => {
-      const { user } = args.req;
-
-      return authenticated(args) && user?.role === 'admin'
-    },
+    admin: authenticated,
     create: (args) => {
       const { data } = args;
       if (isCreatingAdminUser(data) && !admin(args)) return false
@@ -28,7 +22,6 @@ export const Users: CollectionConfig = {
     update: authenticated,
   },
   hooks: {
-    beforeLogin: [redirectUserIfNotAdmin]
   },
   admin: {
     defaultColumns: ['name', 'email'],

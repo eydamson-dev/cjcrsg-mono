@@ -1,4 +1,6 @@
-import React from 'react'
+'use client';
+
+import React from 'react';
 
 const BeforeLogin: React.FC = () => {
   return (
@@ -8,7 +10,7 @@ const BeforeLogin: React.FC = () => {
         {' This is where site admins will log in to manage your website.'}
       </p>
     </div>
-  )
-}
+  );
+};
 
-export default BeforeLogin
+export default BeforeLogin;

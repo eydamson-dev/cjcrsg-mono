@@ -1,12 +1,23 @@
-import { Banner } from '@payloadcms/ui/elements/Banner'
-import React from 'react'
+'use client';
 
-import { SeedButton } from './SeedButton'
-import './index.scss'
+import React from 'react';
 
-const baseClass = 'before-dashboard'
+import { useAuth } from '@payloadcms/ui';
+import { Banner } from '@payloadcms/ui/elements/Banner';
+
+import { User } from '@/payload-types';
+import { redirect } from 'next/navigation';
+
+import { SeedButton } from './SeedButton';
+import './index.scss';
+
+const baseClass = 'before-dashboard';
 
 const BeforeDashboard: React.FC = () => {
+
+  const { user } = useAuth<User>();
+  if (user?.role !== 'admin') redirect('/profile');
+
   return (
     <div className={baseClass}>
       <Banner className={`${baseClass}__banner`} type="success">
@@ -68,7 +79,7 @@ const BeforeDashboard: React.FC = () => {
       </a>
       , you can remove it at any time by updating your <strong>payload.config</strong>.
     </div>
-  )
-}
+  );
+};
 
-export default BeforeDashboard
+export default BeforeDashboard;
