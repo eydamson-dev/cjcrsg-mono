@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import { Cta } from '@/components/Cta';
 import { FAQ } from '@/components/FAQ';
 import { Features } from '@/components/Features';
@@ -14,7 +16,6 @@ import { Sponsors } from '@/components/Sponsors';
 import { StatementOfFaith } from '@/components/StatementOfFaith';
 import { Team } from '@/components/Team';
 import { Testimonials } from '@/components/Testimonials';
-import type { Metadata } from 'next';
 
 function Home() {
   return (
