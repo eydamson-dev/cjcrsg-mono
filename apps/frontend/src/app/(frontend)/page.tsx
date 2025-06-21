@@ -14,6 +14,7 @@ import { Sponsors } from '@/components/Sponsors';
 import { StatementOfFaith } from '@/components/StatementOfFaith';
 import { Team } from '@/components/Team';
 import { Testimonials } from '@/components/Testimonials';
+import type { Metadata } from 'next';
 
 function Home() {
   return (
@@ -36,6 +37,12 @@ function Home() {
       <ScrollToTop />
     </>
   );
+}
+
+export function generateMetadata(): Metadata {
+  return {
+    title: 'Home',
+  };
 }
 
 export default Home;
