@@ -1,6 +1,7 @@
 import { getCurrentUser } from '@/actions/auth';
 import { confirmAttendance, getScheduleById } from '@/actions/schedules';
 import { Schedule, User } from '@/payload-types';
+import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import { AttendanceGreetings } from './components/AttendanceGreetings';
@@ -27,6 +28,12 @@ async function confirmUserAttendance({
   event: Schedule;
 }): Promise<[Error | null, Schedule | null]> {
   return await confirmAttendance(event, user);
+}
+
+export function generateMetadata(): Metadata {
+  return {
+    title: 'Attendance',
+  };
 }
 
 export default Attendance;
