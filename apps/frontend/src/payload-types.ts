@@ -411,7 +411,8 @@ export interface Schedule {
   title: string;
   scheduleTag?: (string | ScheduleTag)[] | null;
   date: string;
-  location: string;
+  church: string | Church;
+  location?: string | null;
   media?: (string | Media)[] | null;
   attendees?: (string | User)[] | null;
   description?: string | null;
@@ -430,6 +431,18 @@ export interface ScheduleTag {
     hasNextPage?: boolean;
     totalDocs?: number;
   };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "churches".
+ */
+export interface Church {
+  id: string;
+  churchName: string;
+  address?: string | null;
+  remarks?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -772,18 +785,6 @@ export interface Form {
         id?: string | null;
       }[]
     | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "churches".
- */
-export interface Church {
-  id: string;
-  churchName: string;
-  address?: string | null;
-  remarks?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1279,6 +1280,7 @@ export interface SchedulesSelect<T extends boolean = true> {
   title?: T;
   scheduleTag?: T;
   date?: T;
+  church?: T;
   location?: T;
   media?: T;
   attendees?: T;

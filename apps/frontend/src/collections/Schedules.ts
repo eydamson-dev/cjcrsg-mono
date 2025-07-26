@@ -1,6 +1,7 @@
-import type { CollectionConfig } from "payload";
-import { anyone } from '../access/anyone'
-import { authenticated } from '../access/authenticated'
+import type { CollectionConfig } from 'payload';
+
+import { anyone } from '../access/anyone';
+import { authenticated } from '../access/authenticated';
 
 export const Schedules: CollectionConfig = {
   slug: 'schedules',
@@ -11,7 +12,7 @@ export const Schedules: CollectionConfig = {
     update: authenticated,
   },
   admin: {
-    useAsTitle: 'title'
+    useAsTitle: 'title',
   },
   fields: [
     {
@@ -31,26 +32,31 @@ export const Schedules: CollectionConfig = {
       required: true,
       admin: {
         date: {
-          pickerAppearance: 'dayAndTime'
-        }
-      }
+          pickerAppearance: 'dayAndTime',
+        },
+      },
+    },
+    {
+      name: 'church',
+      type: 'relationship',
+      relationTo: 'churches',
+      required: true
     },
     {
       name: 'location',
       type: 'text',
-      required: true
     },
     {
       name: 'media',
       type: 'upload',
       hasMany: true,
-      relationTo: 'media'
+      relationTo: 'media',
     },
     {
       name: 'attendees',
       type: 'relationship',
       relationTo: 'users',
-      hasMany: true
+      hasMany: true,
     },
     {
       name: 'QRAttendance',
@@ -58,17 +64,17 @@ export const Schedules: CollectionConfig = {
       admin: {
         position: 'sidebar',
         components: {
-          Field: '@/fields/QRAttendance/QRAttendance#QRAttendance'
-        }
-      }
+          Field: '@/fields/QRAttendance/QRAttendance#QRAttendance',
+        },
+      },
     },
     {
       name: 'description',
       label: 'Notes',
       type: 'textarea',
       admin: {
-        position: 'sidebar'
-      }
+        position: 'sidebar',
+      },
     },
-  ]
-}
+  ],
+};
