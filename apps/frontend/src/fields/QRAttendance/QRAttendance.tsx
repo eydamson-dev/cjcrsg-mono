@@ -51,8 +51,8 @@ export const QRAttendance = () => {
   const fileName = `${date.toLocaleDateString('en-US', {
     dateStyle: 'medium',
   })} - ${savedDocumentData?.eventName}.png`;
-  const attendanceLink = `${process.env.SITE_URL}/attendance/${savedDocumentData?.id}`;
 
+  const attendanceLink = `${process.env.NEXT_PUBLIC_SITE_URL}/attendance/${savedDocumentData?.id}`;
   config.data = attendanceLink;
 
   const [qrCode, setQrCode] = useState<QRCodeStyling>();
